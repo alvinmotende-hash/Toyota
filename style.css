@@ -1,6 +1,4 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -27,7 +25,6 @@ nav a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease;
 }
 
 nav a:hover {
@@ -36,7 +33,6 @@ nav a:hover {
 
 .Search-Container {
   text-align: center;
-  margin-top: 10px;
 }
 
 .Search-Container input {
@@ -54,7 +50,6 @@ nav a:hover {
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 .Search-Container button:hover {
@@ -65,11 +60,6 @@ section {
   padding: 40px 20px;
   max-width: 1000px;
   margin: auto;
-}
-
-section h2 {
-  margin-bottom: 15px;
-  color: #111;
 }
 
 .gallery-grid {
@@ -111,7 +101,6 @@ form button {
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 form button:hover {
@@ -141,7 +130,6 @@ footer {
 .footer-container a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .footer-container a:hover {
@@ -153,5 +141,4 @@ footer {
   margin-top: 20px;
   border-top: 1px solid #444;
   padding-top: 10px;
-  font-size: 0.9rem;
 }
