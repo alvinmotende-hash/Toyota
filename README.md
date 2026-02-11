@@ -9,7 +9,7 @@ Use git clone in order to download the file
 1.Git v-3.1
 ### Installation instruction
 1.Git clone {*https://github.com/alvinmotende-hash/todo.git*}
-2.Open project folder {*cd TODO-LIST*}
+2.Open project folder {*cd Toyota*}
 ## Technologies used
 1.HTML
 2.CSS
