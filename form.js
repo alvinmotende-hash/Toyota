@@ -1,21 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.querySelector("#contactForm");
-  const confirmation = document.createElement("p");
-  confirmation.style.color = "green";
-  contactForm.appendChild(confirmation);
+  const form = document.querySelector("#contactForm");
+  const msg = document.createElement("p");
+  form.appendChild(msg);
 
-  contactForm.addEventListener("submit", e => {
+  form.addEventListener("submit", e => {
     e.preventDefault();
-    const name = document.querySelector("#name").value.trim();
-    const email = document.querySelector("#email").value.trim();
-    const message = document.querySelector("#message").value.trim();
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
 
     if (name && email && message) {
-      confirmation.textContent = `Thank you, ${name}! Your message has been sent.`;
-      e.target.reset();
+      msg.style.color = "green";
+      msg.textContent = `Thank you, ${name}! Your message has been sent.`;
+      form.reset();
     } else {
-      confirmation.style.color = "red";
-      confirmation.textContent = "Please fill in all fields before submitting.";
+      msg.style.color = "red";
+      msg.textContent = "Please fill in all fields before submitting.";
     }
   });
 });

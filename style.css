@@ -108,6 +108,26 @@ form button:hover {
   color: #111;
 }
 
+.form-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.form-message.success {
+  background-color: #e6ffed;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
+}
+
+.form-message.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
+}
+
+
 .banner-image {
   width: 100%;        /* spans full width */
   height: auto;       /* keeps proportions */
