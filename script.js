@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // -------------------------------
   // Smooth scroll for internal anchors
-  // -------------------------------
   document.querySelectorAll("nav a").forEach(link => {
     link.addEventListener("click", e => {
       const href = link.getAttribute("href");
@@ -13,9 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------------------------------
+  
   // Search functionality with auto section toggling
-  // -------------------------------
   document.querySelector("#searchbtn").addEventListener("click", () => {
     const query = document.querySelector("#searchInput").value.trim().toLowerCase();
     const allImages = document.querySelectorAll(".gallery-grid img");
@@ -63,9 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // -------------------------------
   // Popup Modal for gallery images
-  // -------------------------------
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("modalImage");
   const captionText = document.getElementById("caption");
@@ -91,9 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // -------------------------------
   // Contact form submission
-  // -------------------------------
   const contactForm = document.querySelector("#contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", e => {
