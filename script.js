@@ -14,24 +14,54 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // -------------------------------
-  // Search functionality in gallery
+  // Search functionality with auto section toggling
   // -------------------------------
   document.querySelector("#searchbtn").addEventListener("click", () => {
     const query = document.querySelector("#searchInput").value.trim().toLowerCase();
-    if (!query) return alert("Please enter a vehicle name to search.");
+    const allImages = document.querySelectorAll(".gallery-grid img");
+
+    if (!query) {
+      alert("Please enter a vehicle name to search.");
+      return;
+    }
 
     let found = false;
-    document.querySelectorAll(".gallery-grid img").forEach(img => {
+
+    // Filter images
+    allImages.forEach(img => {
       if (img.alt.toLowerCase().includes(query)) {
-        img.scrollIntoView({ behavior: "smooth", block: "center" });
-        img.style.border = "3px solid #ffcc00";
-        setTimeout(() => (img.style.border = ""), 5000);
+        img.style.display = "inline-block";
         found = true;
+      } else {
+        img.style.display = "none";
       }
     });
 
-    if (!found) alert("No matching vehicle found in the gallery.");
+    // Grouping by DOM order (adjust slice sizes to match your HTML)
+    const signatureImages = Array.from(allImages).slice(0, 20); // first group
+    const electricImages = Array.from(allImages).slice(20);     // second group
+
+    // Toggle headings/paragraphs based on visibility
+    toggleSection(signatureImages, "Explore our signature models", "Take a look at some of our finest designs");
+    toggleSection(electricImages, "Take a look at some innovation", "Electric cars are transforming");
+
+    if (!found) {
+      alert("No matching vehicle found.");
+      // Reset: show all images and headings again
+      allImages.forEach(img => (img.style.display = "inline-block"));
+      document.querySelectorAll("h2, p").forEach(el => el.style.display = "block");
+    }
   });
+
+  function toggleSection(images, headingText, paragraphText) {
+    const hasVisible = images.some(img => img.style.display !== "none");
+    document.querySelectorAll("h2").forEach(h => {
+      if (h.textContent.includes(headingText)) h.style.display = hasVisible ? "block" : "none";
+    });
+    document.querySelectorAll("p").forEach(p => {
+      if (p.textContent.includes(paragraphText)) p.style.display = hasVisible ? "block" : "none";
+    });
+  }
 
   // -------------------------------
   // Popup Modal for gallery images
@@ -41,24 +71,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const captionText = document.getElementById("caption");
   const closeBtn = document.querySelector(".close");
 
-  // Hide modal by default
   modal.style.display = "none";
 
-  // Show modal only when an image is clicked
   document.querySelectorAll(".gallery-grid img").forEach(img => {
     img.addEventListener("click", () => {
-      modal.style.display = "flex";   // show popup centered
-      modalImg.src = img.src;         // set clicked image
-      captionText.innerHTML = img.alt; // show description beside image
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      captionText.innerHTML = img.alt;
     });
   });
 
-  // Close popup when clicking the X
   closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
   });
 
-  // Close popup when clicking outside the modal box
   modal.addEventListener("click", e => {
     if (e.target === modal) {
       modal.style.display = "none";
@@ -85,7 +111,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-
-
-
