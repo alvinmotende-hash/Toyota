@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (img.alt.toLowerCase().includes(query)) {
         img.scrollIntoView({ behavior: "smooth", block: "center" });
         img.style.border = "3px solid #ffcc00";
-        setTimeout(() => (img.style.border = ""), 2000); // highlight briefly
+        setTimeout(() => (img.style.border = ""), 5000); // highlight briefly
         found = true;
       }
     });
