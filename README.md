@@ -6,7 +6,7 @@ Motii Motors is a modern, responsive car showcase platform designed to highlight
 ## Installation
 Use git clone in order to download the file
 ## Installation Requirements
-1.Git v-3.1
+1.Git v-2.53
 ### Installation instruction
 1.Git clone {*https://github.com/alvinmotende-hash/Toyota.git*}
 2.Open project folder {*cd Toyota*}
