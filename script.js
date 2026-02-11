@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const target = document.querySelector(href);
         if (target) target.scrollIntoView({ behavior: "smooth" });
       }
-      // If href is "about.html" or "https://example.com", 
-      // browser will redirect normally
     });
   });
 
@@ -32,8 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!found) alert("No matching vehicle found in the gallery.");
   });
 
+  document.addEventListener("DOMContentLoaded", () => {
   // Contact form submission
-  document.querySelector("#Contact form").addEventListener("submit", e => {
+  document.querySelector("#contactForm").addEventListener("submit", e => {
     e.preventDefault();
     const name = document.querySelector("#name").value.trim();
     const email = document.querySelector("#email").value.trim();
@@ -46,5 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please fill in all fields before submitting.");
     }
   });
-
 });
+
+
