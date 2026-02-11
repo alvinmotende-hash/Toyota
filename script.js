@@ -1,57 +1,47 @@
-// Wait until DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  
-  // Smooth scroll for nav links
+
+  // Smooth scroll only for internal anchors
   document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute("href").substring(1);
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth" });
+    link.addEventListener("click", e => {
+      const href = link.getAttribute("href");
+      if (href.startsWith("#")) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: "smooth" });
       }
+      // If href is "about.html" or "https://example.com", 
+      // browser will redirect normally
     });
   });
 
   // Search functionality
-  const searchBtn = document.getElementById("searchbtn");
-  const searchInput = document.getElementById("searchInput");
+  document.querySelector("#searchbtn").addEventListener("click", () => {
+    const query = document.querySelector("#searchInput").value.trim().toLowerCase();
+    if (!query) return alert("Please enter a vehicle name to search.");
 
-  searchBtn.addEventListener("click", () => {
-    const query = searchInput.value.toLowerCase();
-    if (!query) {
-      alert("Please enter a vehicle name to search.");
-      return;
-    }
-
-    // Search through gallery images alt text
-    const images = document.querySelectorAll(".gallery-grid img");
     let found = false;
-    images.forEach(img => {
+    document.querySelectorAll(".gallery-grid img").forEach(img => {
       if (img.alt.toLowerCase().includes(query)) {
         img.scrollIntoView({ behavior: "smooth", block: "center" });
         img.style.border = "3px solid #ffcc00";
-        setTimeout(() => (img.style.border = ""), 5000); // highlight briefly
+        setTimeout(() => (img.style.border = ""), 5000);
         found = true;
       }
     });
 
-    if (!found) {
-      alert("No matching vehicle found in the gallery.");
-    }
+    if (!found) alert("No matching vehicle found in the gallery.");
   });
 
   // Contact form submission
-  const form = document.querySelector("#Contact form");
-  form.addEventListener("submit", e => {
+  document.querySelector("#Contact form").addEventListener("submit", e => {
     e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
+    const name = document.querySelector("#name").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const message = document.querySelector("#message").value.trim();
 
     if (name && email && message) {
       alert(`Thank you, ${name}! Your message has been sent.`);
-      form.reset();
+      e.target.reset();
     } else {
       alert("Please fill in all fields before submitting.");
     }
