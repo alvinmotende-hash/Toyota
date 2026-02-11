@@ -13,7 +13,8 @@ Use git clone in order to download the file
 ## Technologies used
 1.HTML
 2.CSS
-3.Github
+3.Javascript
+4.Github
 ## Support and contact details
 github.com/alvin-motende
 ## known bugs
