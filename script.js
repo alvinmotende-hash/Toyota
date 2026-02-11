@@ -1,87 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Smooth scroll for internal anchors
-  document.querySelectorAll("nav a").forEach(link => {
+  // Smooth scroll
+  document.querySelectorAll("nav a[href^='#']").forEach(link =>
     link.addEventListener("click", e => {
-      const href = link.getAttribute("href");
-      if (href.startsWith("#")) {
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
+      e.preventDefault();
+      document.querySelector(link.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
+    })
+  );
 
-  
-  // Search functionality with auto section toggling
+  // Search + toggle
+  const allImages = document.querySelectorAll(".gallery-grid img");
   document.querySelector("#searchbtn").addEventListener("click", () => {
-    const query = document.querySelector("#searchInput").value.trim().toLowerCase();
-    const allImages = document.querySelectorAll(".gallery-grid img");
-
-    if (!query) {
-      alert("Please enter a vehicle name to search.");
-      return;
-    }
+    const q = document.querySelector("#searchInput").value.trim().toLowerCase();
+    if (!q) return alert("Please enter a vehicle name to search.");
 
     let found = false;
-
-    // Filter images
     allImages.forEach(img => {
-      if (img.alt.toLowerCase().includes(query)) {
-        img.style.display = "inline-block";
-        found = true;
-      } else {
-        img.style.display = "none";
-      }
+      const match = img.alt.toLowerCase().includes(q);
+      img.style.display = match ? "inline-block" : "none";
+      if (match) found = true;
     });
 
-    // Grouping by DOM order (adjust slice sizes to match your HTML)
-    const signatureImages = Array.from(allImages).slice(0, 20); // first group
-    const electricImages = Array.from(allImages).slice(20);     // second group
-
-    // Toggle headings/paragraphs based on visibility
-    toggleSection(signatureImages, "Explore our signature models", "Take a look at some of our finest designs");
-    toggleSection(electricImages, "Take a look at some innovation", "Electric cars are transforming");
+    const groups = [
+      { imgs: Array.from(allImages).slice(0, 20), h: "Explore our signature models", p: "Take a look at some of our finest designs" },
+      { imgs: Array.from(allImages).slice(20), h: "Take a look at some innovation", p: "Electric cars are transforming" }
+    ];
+    groups.forEach(g => toggle(g.imgs, g.h, g.p));
 
     if (!found) {
       alert("No matching vehicle found.");
-      // Reset: show all images and headings again
       allImages.forEach(img => (img.style.display = "inline-block"));
-      document.querySelectorAll("h2, p").forEach(el => el.style.display = "block");
+      document.querySelectorAll("h2, p").forEach(el => (el.style.display = "block"));
     }
   });
 
-  function toggleSection(images, headingText, paragraphText) {
-    const hasVisible = images.some(img => img.style.display !== "none");
-    document.querySelectorAll("h2").forEach(h => {
-      if (h.textContent.includes(headingText)) h.style.display = hasVisible ? "block" : "none";
-    });
-    document.querySelectorAll("p").forEach(p => {
-      if (p.textContent.includes(paragraphText)) p.style.display = hasVisible ? "block" : "none";
-    });
-  }
+  const toggle = (imgs, hText, pText) => {
+    const visible = imgs.some(img => img.style.display !== "none");
+    document.querySelectorAll("h2").forEach(h => h.textContent.includes(hText) && (h.style.display = visible ? "block" : "none"));
+    document.querySelectorAll("p").forEach(p => p.textContent.includes(pText) && (p.style.display = visible ? "block" : "none"));
+  };
 
-  // Popup Modal for gallery images
+  // Popup modal
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("modalImage");
-  const captionText = document.getElementById("caption");
-  const closeBtn = document.querySelector(".close");
+  const caption = document.getElementById("caption");
 
   modal.style.display = "none";
-
-  document.querySelectorAll(".gallery-grid img").forEach(img => {
+  allImages.forEach(img =>
     img.addEventListener("click", () => {
       modal.style.display = "flex";
       modalImg.src = img.src;
-      captionText.innerHTML = img.alt;
-    });
-  });
+      caption.textContent = img.alt;
+    })
+  );
 
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  modal.addEventListener("click", e => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
+  document.querySelector(".close").addEventListener("click", () => (modal.style.display = "none"));
+  modal.addEventListener("click", e => e.target === modal && (modal.style.display = "none"));
+});
