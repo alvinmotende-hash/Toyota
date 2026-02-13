@@ -1,5 +1,5 @@
 # My Toyota
-#### Date, 2026/02/11
+#### Date, 2026/02/13
 #### By *Alvin Motende*
 ## Description
 Motii Motors is a modern, responsive car showcase platform designed to highlight vehicles in a clean and engaging way. The site features smooth navigation, an interactive gallery with search functionality, and a user-friendly contact form for inquiries. Built with accessibility and simplicity in mind, it combines sleek design with practical features like smooth scrolling, image highlighting, and form validation. The result is a professional, visually appealing website that makes exploring cars easy and enjoyable.
