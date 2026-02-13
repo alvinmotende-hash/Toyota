@@ -125,3 +125,52 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === overlay) overlay.style.display = "none";
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Select all images
+  const images = document.querySelectorAll("img");
+
+  images.forEach(img => {
+    // Add a new attribute called data-details using the alt text
+    img.setAttribute("data-details", img.alt);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll("img");
+
+  images.forEach(img => {
+    // Create overlay element
+    const overlay = document.createElement("div");
+    overlay.textContent = img.getAttribute("data-details");
+    Object.assign(overlay.style, {
+      position: "absolute",
+      bottom: "0",
+      left: "0",
+      right: "0",
+      background: "rgba(0,0,0,0.7)",
+      color: "#fff",
+      padding: "8px",
+      display: "none",
+      fontSize: "14px",
+      zIndex: "1000"
+    });
+
+    // Wrap image in a container
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "relative";
+    wrapper.style.display = "inline-block";
+    wrapper.style.margin = "10px";
+    img.parentNode.insertBefore(wrapper, img);
+    wrapper.appendChild(img);
+    wrapper.appendChild(overlay);
+
+    // Hover events
+    wrapper.addEventListener("mouseenter", () => {
+      overlay.style.display = "block";
+    });
+    wrapper.addEventListener("mouseleave", () => {
+      overlay.style.display = "none";
+    });
+  });
+});
