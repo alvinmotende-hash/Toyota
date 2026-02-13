@@ -174,3 +174,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.querySelector("#searchInput"); // your search box
+  const searchBtn = document.querySelector("#searchbtn");     // your search button
+
+  // Load saved search from localStorage
+  const savedSearch = localStorage.getItem("lastSearch");
+  if (savedSearch) {
+    searchInput.value = savedSearch;
+  }
+
+  // Save new search when button is clicked
+  searchBtn.addEventListener("click", () => {
+    const term = searchInput.value.trim();
+    if (term) {
+      localStorage.setItem("lastSearch", term);
+      alert("Saved search: " + term);
+    }
+  });
+});
