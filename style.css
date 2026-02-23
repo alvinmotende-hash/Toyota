@@ -80,39 +80,55 @@ section {
   transform: scale(1.05);
 }
 
+/* ✨ Enhanced Form Styling */
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 form input, form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
   font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus, form textarea:focus {
+  border: 2px solid #2563eb;
+  box-shadow: 0 0 8px rgba(37,99,235,0.4);
+  outline: none;
 }
 
 form button {
-  padding: 12px;
+  padding: 14px;
   border: none;
-  background: #111;
+  background: linear-gradient(90deg, #2563eb, #22c55e);
   color: #fff;
   font-weight: bold;
-  border-radius: 6px;
+  border-radius: 30px;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 form button:hover {
-  background: #ffcc00;
-  color: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(34,197,94,0.5);
 }
 
 .form-message {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 5px;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
   font-weight: bold;
+  text-align: center;
 }
 
 .form-message.success {
@@ -127,12 +143,52 @@ form button:hover {
   border: 1px solid #c62828;
 }
 
-
 .banner-image {
-  width: 100%;        /* spans full width */
-  height: auto;       /* keeps proportions */
-  display: block;     /* removes inline spacing */
-  margin: 20px 0;     /* spacing above and below */
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px 0;
+}
+
+/* ✨ Card Styling for Motii Motors Sections */
+main h2 {
+  margin-top: 40px;
+  color: #2563eb;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+main h2 + p {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  max-width: 900px;
+  line-height: 1.7;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+main h2 + p:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+main a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: linear-gradient(90deg, #2563eb, #22c55e);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+main a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(34,197,94,0.5);
 }
 
 footer {
@@ -178,7 +234,7 @@ footer {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5); /* dim background */
+  background-color: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,7 +253,7 @@ footer {
 .modal-content {
   display: flex;
   align-items: center;
-  gap: 20px; /* space between image and description */
+  gap: 20px;
 }
 
 .modal-content img {
@@ -220,8 +276,9 @@ footer {
   font-weight: bold;
   cursor: pointer;
 }
+
 @media (max-width:600px) {
-  body{
+  body {
     background-color: #2e7d32;
     color: black;
   }
