@@ -7,6 +7,7 @@ body {
   line-height: 1.6;
   background-color: #F0F0F0;
   color: #333;
+  margin: 0; /* ensures no default margin */
 }
 
 header {
@@ -15,47 +16,87 @@ header {
   padding: 15px 20px;
 }
 
+/* ✨ Customized Navigation Bar */
 nav {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
+  padding: 15px 40px;
+  background: #111;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background: #ffcc00;
+  transition: width 0.3s ease;
 }
 
 nav a:hover {
   color: #ffcc00;
 }
 
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ✨ Gradient Search Section */
 .Search-Container {
   text-align: center;
+  margin: 40px auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.Search-Container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
 }
 
 .Search-Container input {
-  padding: 8px;
-  width: 250px;
+  padding: 12px;
+  width: 280px;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin-right: 10px;
 }
 
 .Search-Container button {
-  padding: 8px 15px;
+  padding: 12px 20px;
   border: none;
   background: #ffcc00;
   color: #111;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .Search-Container button:hover {
-  background: #e6b800;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255,204,0,0.5);
 }
 
+/* Sections */
 section {
   padding: 40px 20px;
   max-width: 1000px;
@@ -275,11 +316,4 @@ footer {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-}
-
-@media (max-width:600px) {
-  body {
-    background-color: #2e7d32;
-    color: black;
-  }
 }
