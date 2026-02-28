@@ -215,6 +215,33 @@ document.getElementById("recommenderForm").addEventListener("submit", function(e
     else car = "BMW 3 Series (Compact Sedan)";
   }
 
-  document.getElementById("recommendation").innerHTML = 
-    `<h3>Recommended Car:</h3><p>${car}</p>`;
+  // Show recommendation with button
+  document.getElementById("recommendation").innerHTML = `
+    <h3>Recommended Car:</h3>
+    <p>${car}</p>
+    <button id="bookBtn">Book Test Drive</button>
+  `;
+
+  // Attach event to open modal immediately
+  document.getElementById("bookBtn").addEventListener("click", function() {
+    document.getElementById("bookingModal").style.display = "block";
+    document.getElementById("carSelected").value = car;
+  });
+});
+
+// Close modal
+document.querySelector(".close").onclick = function() {
+  document.getElementById("bookingModal").style.display = "none";
+};
+
+// Handle booking form submission
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const car = document.getElementById("carSelected").value;
+
+  alert(`Thank you ${name}! We’ll contact you at ${email} or ${phone} to arrange a test drive for the ${car}.`);
+  document.getElementById("bookingModal").style.display = "none";
 });
