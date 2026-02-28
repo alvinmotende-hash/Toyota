@@ -1,148 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Smooth scroll
-  document.querySelectorAll("nav a[href^='#']").forEach(link =>
+
+  /* ===============================
+     SMOOTH SCROLL
+  =============================== */
+  document.querySelectorAll("nav a[href^='#']").forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
-      document.querySelector(link.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
-    })
-  );
-
-  // Search + toggle
-  const allImages = document.querySelectorAll(".gallery-grid img");
-  document.querySelector("#searchbtn").addEventListener("click", () => {
-    const q = document.querySelector("#searchInput").value.trim().toLowerCase();
-    if (!q) return alert("Please enter a vehicle name to search.");
-
-    let found = false;
-    allImages.forEach(img => {
-      const match = img.alt.toLowerCase().includes(q);
-      img.style.display = match ? "inline-block" : "none";
-      if (match) found = true;
+      document.querySelector(link.getAttribute("href"))
+        ?.scrollIntoView({ behavior: "smooth" });
     });
-
-    const groups = [
-      { imgs: Array.from(allImages).slice(0, 20), h: "Explore our signature models", p: "Take a look at some of our finest designs" },
-      { imgs: Array.from(allImages).slice(20), h: "Take a look at some innovation", p: "Electric cars are transforming" }
-    ];
-    groups.forEach(g => toggle(g.imgs, g.h, g.p));
-
-    if (!found) {
-      alert("No matching vehicle found.");
-      allImages.forEach(img => (img.style.display = "inline-block"));
-      document.querySelectorAll("h2, p").forEach(el => (el.style.display = "block"));
-    }
   });
 
-  const toggle = (imgs, hText, pText) => {
-    const visible = imgs.some(img => img.style.display !== "none");
-    document.querySelectorAll("h2").forEach(h => h.textContent.includes(hText) && (h.style.display = visible ? "block" : "none"));
-    document.querySelectorAll("p").forEach(p => p.textContent.includes(pText) && (p.style.display = visible ? "block" : "none"));
-  };
 
-  // Popup modal
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImage");
-  const caption = document.getElementById("caption");
-
-  modal.style.display = "none";
-  allImages.forEach(img =>
-    img.addEventListener("click", () => {
-      modal.style.display = "flex";
-      modalImg.src = img.src;
-      caption.textContent = img.alt;
-    })
-  );
-
-  document.querySelector(".close").addEventListener("click", () => (modal.style.display = "none"));
-  modal.addEventListener("click", e => e.target === modal && (modal.style.display = "none"));
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
+  /* ===============================
+     GALLERY + SEARCH
+  =============================== */
   const gallery = document.querySelector(".gallery-grid");
   const allImages = gallery.querySelectorAll("img");
   const searchBtn = document.querySelector("#searchbtn");
+  const searchInput = document.querySelector("#searchInput");
 
-  // Create hamburger button next to search button
-  const menuBtn = document.createElement("button");
-  menuBtn.textContent = "☰ Cars";
-  menuBtn.style.marginLeft = "10px";
-  menuBtn.style.cursor = "pointer";
-  searchBtn.insertAdjacentElement("afterend", menuBtn);
+  searchBtn.addEventListener("click", () => {
+    const q = searchInput.value.trim().toLowerCase();
+    if (!q) return alert("Please enter a vehicle name to search.");
 
-  // Create popup overlay (hidden by default)
-  const overlay = document.createElement("div");
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.background = "rgba(0,0,0,0.5)";
-  overlay.style.display = "none";
-  overlay.style.justifyContent = "center";
-  overlay.style.alignItems = "center";
-  overlay.style.zIndex = "1000";
-  document.body.appendChild(overlay);
+    let found = false;
 
-  // Create popup box
-  const popup = document.createElement("div");
-  popup.style.background = "#fff";
-  popup.style.padding = "15px";
-  popup.style.width = "250px";
-  popup.style.maxHeight = "300px";
-  popup.style.overflowY = "auto";
-  popup.style.borderRadius = "8px";
-  popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
-  overlay.appendChild(popup);
-
-  // Fill popup with car names
-  const list = document.createElement("ul");
-  list.style.listStyle = "none";
-  list.style.padding = "0";
-  allImages.forEach(img => {
-    const li = document.createElement("li");
-    li.textContent = img.alt;
-    li.style.cursor = "pointer";
-    li.style.padding = "6px 0";
-    li.style.borderBottom = "1px solid #eee";
-
-    // Scroll to image when clicked
-    li.addEventListener("click", () => {
-      img.scrollIntoView({ behavior: "smooth", block: "center" });
-      overlay.style.display = "none"; // close popup after selection
+    allImages.forEach(img => {
+      const match = img.alt.toLowerCase().includes(q);
+      img.parentElement.style.display = match ? "inline-block" : "none";
+      if (match) found = true;
     });
 
-    list.appendChild(li);
+    if (!found) {
+      alert("No matching vehicle found.");
+      allImages.forEach(img => {
+        img.parentElement.style.display = "inline-block";
+      });
+    }
+
+    localStorage.setItem("lastSearch", q);
   });
-  popup.appendChild(list);
 
-  // Toggle popup when hamburger is clicked
-  menuBtn.addEventListener("click", () => {
-    overlay.style.display = "flex";
-  });
+  // Load saved search
+  const savedSearch = localStorage.getItem("lastSearch");
+  if (savedSearch) {
+    searchInput.value = savedSearch;
+  }
 
-  // Close popup when clicking outside the box
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) overlay.style.display = "none";
-  });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Select all images
-  const images = document.querySelectorAll("img");
+  /* ===============================
+     IMAGE OVERLAY (HOVER DETAILS)
+  =============================== */
+  allImages.forEach(img => {
 
-  images.forEach(img => {
-    // Add a new attribute called data-details using the alt text
     img.setAttribute("data-details", img.alt);
-  });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const images = document.querySelectorAll("img");
-
-  images.forEach(img => {
-    // Create overlay element
     const overlay = document.createElement("div");
     overlay.textContent = img.getAttribute("data-details");
+
     Object.assign(overlay.style, {
       position: "absolute",
       bottom: "0",
@@ -153,95 +69,123 @@ document.addEventListener("DOMContentLoaded", () => {
       padding: "8px",
       display: "none",
       fontSize: "14px",
-      zIndex: "1000"
+      zIndex: "5"
     });
 
-    // Wrap image in a container
     const wrapper = document.createElement("div");
     wrapper.style.position = "relative";
     wrapper.style.display = "inline-block";
     wrapper.style.margin = "10px";
+
     img.parentNode.insertBefore(wrapper, img);
     wrapper.appendChild(img);
     wrapper.appendChild(overlay);
 
-    // Hover events
     wrapper.addEventListener("mouseenter", () => {
       overlay.style.display = "block";
     });
+
     wrapper.addEventListener("mouseleave", () => {
       overlay.style.display = "none";
     });
   });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.querySelector("#searchInput"); // your search box
-  const searchBtn = document.querySelector("#searchbtn");     // your search button
 
-  // Load saved search from localStorage
-  const savedSearch = localStorage.getItem("lastSearch");
-  if (savedSearch) {
-    searchInput.value = savedSearch;
-  }
+  /* ===============================
+     MODAL POPUP (FIXED)
+  =============================== */
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  const caption = document.getElementById("caption");
+  const closeBtn = modal.querySelector(".close"); // FIXED
 
-  // Save new search when button is clicked
-  searchBtn.addEventListener("click", () => {
-    const term = searchInput.value.trim();
-    if (term) {
-      localStorage.setItem("lastSearch", term);
-      alert("Saved search: " + term);
+  modal.style.display = "none";
+
+  allImages.forEach(img => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      caption.textContent = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.style.display = "none";
     }
   });
-});
 
-document.getElementById("recommenderForm").addEventListener("submit", function(e) {
-  e.preventDefault();
 
-  const budget = document.getElementById("budget").value;
-  const family = document.getElementById("family").value;
-  const eco = document.getElementById("eco").value;
+  /* ===============================
+     HAMBURGER CARS MENU
+  =============================== */
+  const menuBtn = document.createElement("button");
+  menuBtn.textContent = "☰ Cars";
+  menuBtn.style.marginLeft = "10px";
+  menuBtn.style.cursor = "pointer";
+  searchBtn.insertAdjacentElement("afterend", menuBtn);
 
-  let car = "";
-
-  // Simple decision tree logic
-  if (eco === "yes") {
-    if (budget === "low") car = "Nissan Leaf (Affordable EV)";
-    else if (budget === "mid") car = "Toyota Prius Hybrid";
-    else car = "Tesla Model X (Luxury EV)";
-  } else {
-    if (family === "large") car = "Toyota Land Cruiser (Spacious SUV)";
-    else if (family === "medium") car = "Toyota Fortuner (Family SUV)";
-    else car = "BMW 3 Series (Compact Sedan)";
-  }
-
-  // Show recommendation with button
-  document.getElementById("recommendation").innerHTML = `
-    <h3>Recommended Car:</h3>
-    <p>${car}</p>
-    <button id="bookBtn">Book Test Drive</button>
-  `;
-
-  // Attach event to open modal immediately
-  document.getElementById("bookBtn").addEventListener("click", function() {
-    document.getElementById("bookingModal").style.display = "block";
-    document.getElementById("carSelected").value = car;
+  const overlayMenu = document.createElement("div");
+  Object.assign(overlayMenu.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.5)",
+    display: "none",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: "2000"
   });
-});
 
-// Close modal
-document.querySelector(".close").onclick = function() {
-  document.getElementById("bookingModal").style.display = "none";
-};
+  document.body.appendChild(overlayMenu);
 
-// Handle booking form submission
-document.getElementById("bookingForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
-  const car = document.getElementById("carSelected").value;
+  const popup = document.createElement("div");
+  Object.assign(popup.style, {
+    background: "#fff",
+    padding: "15px",
+    width: "250px",
+    maxHeight: "300px",
+    overflowY: "auto",
+    borderRadius: "8px"
+  });
 
-  alert(`Thank you ${name}! We’ll contact you at ${email} or ${phone} to arrange a test drive for the ${car}.`);
-  document.getElementById("bookingModal").style.display = "none";
+  overlayMenu.appendChild(popup);
+
+  const list = document.createElement("ul");
+  list.style.listStyle = "none";
+  list.style.padding = "0";
+
+  allImages.forEach(img => {
+    const li = document.createElement("li");
+    li.textContent = img.alt;
+    li.style.cursor = "pointer";
+    li.style.padding = "6px 0";
+    li.style.borderBottom = "1px solid #eee";
+
+    li.addEventListener("click", () => {
+      img.scrollIntoView({ behavior: "smooth", block: "center" });
+      overlayMenu.style.display = "none";
+    });
+
+    list.appendChild(li);
+  });
+
+  popup.appendChild(list);
+
+  menuBtn.addEventListener("click", () => {
+    overlayMenu.style.display = "flex";
+  });
+
+  overlayMenu.addEventListener("click", e => {
+    if (e.target === overlayMenu) {
+      overlayMenu.style.display = "none";
+    }
+  });
+
 });
