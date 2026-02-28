@@ -194,3 +194,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+document.getElementById("recommenderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const budget = document.getElementById("budget").value;
+  const family = document.getElementById("family").value;
+  const eco = document.getElementById("eco").value;
+
+  let car = "";
+
+  // Simple decision tree logic
+  if (eco === "yes") {
+    if (budget === "low") car = "Nissan Leaf (Affordable EV)";
+    else if (budget === "mid") car = "Toyota Prius Hybrid";
+    else car = "Tesla Model X (Luxury EV)";
+  } else {
+    if (family === "large") car = "Toyota Land Cruiser (Spacious SUV)";
+    else if (family === "medium") car = "Toyota Fortuner (Family SUV)";
+    else car = "BMW 3 Series (Compact Sedan)";
+  }
+
+  document.getElementById("recommendation").innerHTML = 
+    `<h3>Recommended Car:</h3><p>${car}</p>`;
+});

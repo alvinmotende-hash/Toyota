@@ -115,7 +115,37 @@
            alt="Electric vehicle charging in Nairobi @Motiimotors Kenya" width="300">
 
         </div>
+        
     </section>
+    <section id="carRecommender">
+  <h2>Find Your Perfect Car</h2>
+  <form id="recommenderForm">
+    <label>Budget:</label>
+    <select id="budget">
+      <option value="low">Below $20,000</option>
+      <option value="mid">20,000–50,000</option>
+      <option value="high">Above $50,000</option>
+    </select>
+
+    <label>Family Size:</label>
+    <select id="family">
+      <option value="small">1–2 people</option>
+      <option value="medium">3–5 people</option>
+      <option value="large">6+ people</option>
+    </select>
+
+    <label>Eco-Friendly:</label>
+    <select id="eco">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <button type="submit">Recommend Car</button>
+  </form>
+
+  <div id="recommendation"></div>
+</section>
+
     <footer>
   <div class="footer-container">
     <div class="footer-about">
@@ -143,6 +173,7 @@
   </div>
 </footer>
 <script src="script.js"></script>
+<script src="three.js"></script>
 </body>
 <div id="imageModal" class="modal">
   <div class="modal-box">

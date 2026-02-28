@@ -1,0 +1,30 @@
+const _scene = new THREE.Scene();
+const _camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const _renderer = new THREE.WebGLRenderer({canvas: document.getElementById("carCanvas")});
+_renderer.setSize(window.innerWidth, window.innerHeight);
+
+const _light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+_scene.add(_light);
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+dirLight.position.set(5, 10, 7.5);
+_scene.add(dirLight);
+
+const _loader = new THREE.GLTFLoader();
+_loader.load("car.glb", function(gltf){
+    _scene.add(gltf.scene);
+    _camera.position.z = 5;
+    _camera.lookAt(_scene.position);
+    _animate();
+});
+
+function _animate(){
+    requestAnimationFrame(_animate);
+    _renderer.render(_scene, _camera);
+}
+
+window.addEventListener("resize", () => {
+  _camera.aspect = window.innerWidth / window.innerHeight;
+  _camera.updateProjectionMatrix();
+  _renderer.setSize(window.innerWidth, window.innerHeight);
+});
